@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SlightTravellerApp</string>
+    <string name="nav_menu_first">Home</string>
+    <string name="nav_menu_second">Discover</string>
+    <string name="nav_menu_third">Dashboard</string>
 </resources>
