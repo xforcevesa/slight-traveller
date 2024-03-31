@@ -3,4 +3,6 @@
     <string name="nav_menu_first">Home</string>
     <string name="nav_menu_second">Discover</string>
     <string name="nav_menu_third">Dashboard</string>
+    <string name="find_more">Find More</string>
+    <string name="avatar">Avatar</string>
 </resources>
