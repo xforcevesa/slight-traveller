@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/home_layout" >
+    android:id="@+id/home_layout"
+    >
 
     <TextView
-        android:id="@+id/dashboard_title"
-        android:layout_width="164dp"
+        android:id="@+id/home_title"
+        android:layout_width="264dp"
         android:layout_height="38dp"
         android:lineSpacingExtra="4sp"
         android:gravity="top"
@@ -20,4 +19,56 @@
         android:layout_marginStart="28sp"
         />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/home_tabs_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/home_title"
+        android:gravity="center"
+        android:layout_marginTop="36sp"
+        >
+
+        <TextView
+            android:id="@+id/home_tabs_menu_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/experiences"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            android:textColor="#5F6799"
+            />
+
+        <TextView
+            android:id="@+id/home_tabs_menu_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/adventures"
+            android:textColor="#999999"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            />
+
+        <TextView
+            android:id="@+id/home_tabs_menu_third"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activities"
+            android:textColor="#999999"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="17sp"
+            />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/main_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/home_tabs_menu" />
+
+</RelativeLayout>

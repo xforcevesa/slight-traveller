@@ -5,7 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@drawable/main_frame_background"
+    tools:context=".MainActivity"
+    android:fitsSystemWindows="true"
+    >
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -13,13 +16,46 @@
         android:layout_height="match_parent"
         android:layout_above="@id/main_nav_menu" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <LinearLayout
         android:id="@+id/main_nav_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_nav_menu" />
+        android:background="#000000FF"
+        android:layout_marginBottom="13dp"
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/navigation_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_menu_first"
+            app:drawableTopCompat="@drawable/home_original"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            />
+
+        <TextView
+            android:id="@+id/navigation_discover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_menu_second"
+            app:drawableTopCompat="@drawable/search_original"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            />
+
+        <TextView
+            android:id="@+id/navigation_dashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_menu_third"
+            app:drawableTopCompat="@drawable/dashboard_original"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>
