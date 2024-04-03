@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="home_tabs_selected">#5F6799</color>
     <color name="home_tabs_original">#999999</color>
+    <color name="search_bar_color">#99AF77</color>
 </resources>

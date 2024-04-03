@@ -28,32 +28,35 @@
 
         <TextView
             android:id="@+id/navigation_home"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/nav_menu_first"
             app:drawableTopCompat="@drawable/home_original"
             android:layout_weight="1"
             android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
             />
 
         <TextView
             android:id="@+id/navigation_discover"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/nav_menu_second"
             app:drawableTopCompat="@drawable/search_original"
             android:layout_weight="1"
             android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
             />
 
         <TextView
             android:id="@+id/navigation_dashboard"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/nav_menu_third"
             app:drawableTopCompat="@drawable/dashboard_original"
             android:layout_weight="1"
             android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
             />
 
     </LinearLayout>

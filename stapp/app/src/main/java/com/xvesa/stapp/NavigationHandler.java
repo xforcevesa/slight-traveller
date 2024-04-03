@@ -3,7 +3,6 @@ package com.xvesa.stapp;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +61,8 @@ public class NavigationHandler {
                     .beginTransaction()
                     .add(R.id.main_frame, Objects.requireNonNull(this.mapper.get(R.id.home_tabs_menu_first)))
                     .commitNow();
+
+            this.lastViewID = R.id.home_tabs_menu_first;
 
             RelativeLayout frame = (RelativeLayout) this.getView();
             assert frame != null;
@@ -146,6 +147,12 @@ public class NavigationHandler {
                         .beginTransaction()
                         .replace(R.id.fragment_container, value)
                         .commitNow();
+
+                if (key == R.id.navigation_home) {
+                    HomePageFragment _default_fragment = (HomePageFragment) Objects.requireNonNull(this.mapper.get(R.id.navigation_home));
+                    assert _default_fragment.getView() != null;
+                    _default_fragment.afterCreateHandler();
+                }
             });
         });
     }
