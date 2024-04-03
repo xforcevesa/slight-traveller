@@ -22,7 +22,7 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
             android:layout_marginTop="24sp"
-            android:layout_marginStart="20sp"
+            android:layout_marginStart="28sp"
             android:layout_centerVertical="true"
             >
 
@@ -39,7 +39,7 @@
             android:layout_width="170sp"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/user_avatar"
-            android:layout_marginStart="35sp"
+            android:layout_marginStart="28sp"
             android:orientation="vertical"
             android:layout_centerVertical="true"
             >

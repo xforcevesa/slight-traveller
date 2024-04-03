@@ -6,19 +6,20 @@
     android:id="@+id/discover_layout">
 
     <androidx.cardview.widget.CardView
+        android:layout_marginTop="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
+        android:background="@drawable/search_edit_text_background"
         app:cardElevation="4dp">
 
-        <EditText
-            android:inputType="text"
+        <SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/search_hint"
-            android:padding="8dp"
-            android:background="@drawable/search_edit_text_background"
-            android:autofillHints="Enter the keywords..."
+            android:iconifiedByDefault="false"
+            android:foreground="@drawable/search_edit_text_background"
+            android:queryHint="@string/search_hint"
             />
 
     </androidx.cardview.widget.CardView>
