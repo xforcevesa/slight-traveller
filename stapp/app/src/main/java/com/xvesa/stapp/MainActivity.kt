@@ -10,8 +10,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.enableEdgeToEdge()
         this.setContentView(R.layout.activity_main)
-        handler = NavigationHandler(this)
-        handler!!.onCreateHandle()
+        handler = NavigationHandler(this).let {
+            it.onCreateHandle()
+            it
+        }
     }
 
     override fun onEnterAnimationComplete() {
