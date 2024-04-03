@@ -1,170 +1,174 @@
-package com.xvesa.stapp;
+package com.xvesa.stapp
 
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.graphics.Typeface
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.util.Pair
+import androidx.fragment.app.Fragment
+import java.util.Objects
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.util.Pair;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import java.util.HashMap;
-import java.util.Objects;
-
-public class NavigationHandler {
-
-    public static class AppTabFragment extends Fragment {
-
-        private final int id;
-
-        public AppTabFragment(int id) {
-            this.id = id;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-            return inflater.inflate(this.id, container, false);
-        }
+class NavigationHandler(private val activity: AppCompatActivity) {
+    open class AppTabFragment(private val id: Int) : Fragment() {
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? = inflater.inflate(id, container, false)
     }
 
-    public static class HomePageFragment extends AppTabFragment {
+    class HomePageFragment(id: Int) : AppTabFragment(id) {
+        private val mapper: HashMap<Int, AppTabFragment>
+        private var lastViewID: Int
 
-        private final HashMap<Integer, AppTabFragment> mapper;
-
-        private Integer lastViewID;
-
-        public HomePageFragment(int id) {
-            super(id);
-            this.lastViewID = R.id.home_tabs_menu_first;
-
-            this.mapper = new HashMap<>();
-            this.mapper.put(R.id.home_tabs_menu_first, new AppTabFragment(R.layout.experiences_layout));
-            this.mapper.put(R.id.home_tabs_menu_second, new AppTabFragment(R.layout.adventures_layout));
-            this.mapper.put(R.id.home_tabs_menu_third, new AppTabFragment(R.layout.activities_layout));
+        init {
+            lastViewID = R.id.home_tabs_menu_first
+            mapper = HashMap()
+            mapper[R.id.home_tabs_menu_first] = AppTabFragment(R.layout.experiences_layout)
+            mapper[R.id.home_tabs_menu_second] = AppTabFragment(R.layout.adventures_layout)
+            mapper[R.id.home_tabs_menu_third] = AppTabFragment(R.layout.activities_layout)
         }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return super.onCreateView(inflater, container, savedInstanceState);
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            return super.onCreateView(inflater, container, savedInstanceState)
         }
 
-        public void afterCreateHandler() {
-            this.getChildFragmentManager()
+        fun afterCreateHandler() {
+            mapper[R.id.home_tabs_menu_first]?.let {
+                getChildFragmentManager()
                     .beginTransaction()
-                    .add(R.id.main_frame, Objects.requireNonNull(this.mapper.get(R.id.home_tabs_menu_first)))
-                    .commitNow();
-
-            this.lastViewID = R.id.home_tabs_menu_first;
-
-            RelativeLayout frame = (RelativeLayout) this.getView();
-            assert frame != null;
-            this.mapper.forEach((id, fragment) -> {
-                TextView home_tab = frame.findViewById(id);
-                home_tab.setOnClickListener(a -> {
-                    TextView last_tab = frame.findViewById(this.lastViewID);
-                    last_tab.setTypeface(null, Typeface.NORMAL);
-                    last_tab.setTextColor(ContextCompat.getColor(frame.getContext(), R.color.home_tabs_original));
-
-                    this.lastViewID = id;
-                    TextView this_tab = frame.findViewById(id);
-                    this_tab.setTypeface(null, Typeface.BOLD);
-                    this_tab.setTextColor(ContextCompat.getColor(frame.getContext(), R.color.home_tabs_selected));
-
-                    this.getChildFragmentManager()
+                    .add(R.id.main_frame, it)
+                    .commitNow()
+            }
+            lastViewID = R.id.home_tabs_menu_first
+            val frame = (this.view as RelativeLayout?)!!
+            mapper.forEach { (id: Int, _: AppTabFragment?) ->
+                val homeTab = frame.findViewById<TextView>(id)
+                homeTab.setOnClickListener {
+                    val lastTab = frame.findViewById<TextView>(
+                        lastViewID
+                    )
+                    lastTab.setTypeface(null, Typeface.NORMAL)
+                    lastTab.setTextColor(
+                        ContextCompat.getColor(
+                            frame.context,
+                            R.color.home_tabs_original
+                        )
+                    )
+                    lastViewID = id
+                    val thisTab = frame.findViewById<TextView>(id)
+                    thisTab.setTypeface(null, Typeface.BOLD)
+                    thisTab.setTextColor(
+                        ContextCompat.getColor(
+                            frame.context,
+                            R.color.home_tabs_selected
+                        )
+                    )
+                    mapper[id]?.let {
+                        getChildFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.main_frame, Objects.requireNonNull(this.mapper.get(id)))
-                            .commitNow();
-                });
-            });
+                            .replace(R.id.main_frame, it)
+                            .commitNow()
+                    }
+                }
+            }
         }
-
     }
 
-    private final HashMap<Integer, AppTabFragment> mapper;
-    private final HashMap<Integer, Pair<Integer, Integer>> res_map;
-    private final AppCompatActivity activity;
+    private val mapper: HashMap<Int, AppTabFragment>
+    private val resMap: HashMap<Int, Pair<Int, Int>>
+    private var currentID: Int
 
-    private Integer currentID;
-
-    public NavigationHandler(AppCompatActivity a) {
-        this.activity = a;
-
-        this.mapper = new HashMap<>();
-        this.mapper.put(R.id.navigation_home, new HomePageFragment(R.layout.home_layout));
-        this.mapper.put(R.id.navigation_discover, new AppTabFragment(R.layout.discover_layout));
-        this.mapper.put(R.id.navigation_dashboard, new AppTabFragment(R.layout.dashboard_layout));
-
-        this.res_map = new HashMap<>();
-        this.res_map.put(R.id.navigation_home, new Pair<>(R.drawable.home_original, R.drawable.home_clicked));
-        this.res_map.put(R.id.navigation_discover, new Pair<>(R.drawable.search_original, R.drawable.search_square));
-        this.res_map.put(R.id.navigation_dashboard, new Pair<>(R.drawable.dashboard_original, R.drawable.dashboard_clicked));
-
-        this.currentID = R.id.home_tabs_menu;
+    init {
+        mapper = HashMap()
+        mapper[R.id.navigation_home] = HomePageFragment(R.layout.home_layout)
+        mapper[R.id.navigation_discover] = AppTabFragment(R.layout.discover_layout)
+        mapper[R.id.navigation_dashboard] = AppTabFragment(R.layout.dashboard_layout)
+        resMap = HashMap()
+        resMap[R.id.navigation_home] = Pair(
+            R.drawable.home_original,
+            R.drawable.home_clicked
+        )
+        resMap[R.id.navigation_discover] = Pair(
+            R.drawable.search_original,
+            R.drawable.search_square
+        )
+        resMap[R.id.navigation_dashboard] = Pair(
+            R.drawable.dashboard_original,
+            R.drawable.dashboard_clicked
+        )
+        currentID = R.id.home_tabs_menu
     }
 
-    private void handleNavigation() {
-        TextView default_tab = this.activity.findViewById(R.id.navigation_home);
-        Drawable default_drawable_clicked = ContextCompat.getDrawable(this.activity, R.drawable.home_clicked);
-        default_tab.setCompoundDrawablesWithIntrinsicBounds(null, default_drawable_clicked, null, null);
-        this.currentID = R.id.navigation_home;
-
-        HomePageFragment default_fragment = (HomePageFragment) Objects.requireNonNull(this.mapper.get(R.id.navigation_home));
-        FragmentManager supportFragmentManager = this.activity.getSupportFragmentManager();
+    private fun handleNavigation() {
+        val defaultTab = activity.findViewById<TextView>(R.id.navigation_home)
+        val defaultDrawableClicked = ContextCompat.getDrawable(activity, R.drawable.home_clicked)
+        defaultTab.setCompoundDrawablesWithIntrinsicBounds(
+            null,
+            defaultDrawableClicked,
+            null,
+            null
+        )
+        currentID = R.id.navigation_home
+        val defaultFragment =
+            Objects.requireNonNull(mapper[R.id.navigation_home]) as HomePageFragment
+        val supportFragmentManager = activity.supportFragmentManager
         supportFragmentManager
-                .beginTransaction()
-                .add(R.id.fragment_container, default_fragment)
-                .commitNow();
-
-        this.mapper.forEach((key, value) -> {
-            TextView bottom_nav_view = this.activity.findViewById(key);
-            bottom_nav_view.setOnClickListener(a -> {
-                if (this.mapper.containsKey(this.currentID)) {
-                    TextView last = this.activity.findViewById(this.currentID);
-                    Pair<Integer, Integer> pair = this.res_map.get(this.currentID);
-                    assert pair != null;
-                    Integer view_original = pair.first;
-                    Drawable drawable_original = ContextCompat.getDrawable(this.activity, view_original);
-                    last.setCompoundDrawablesWithIntrinsicBounds(null, drawable_original, null, null);
+            .beginTransaction()
+            .add(R.id.fragment_container, defaultFragment)
+            .commitNow()
+        mapper.forEach { (key: Int, value: AppTabFragment?) ->
+            val bottomNavView = activity.findViewById<TextView>(key)
+            bottomNavView.setOnClickListener {
+                if (mapper.containsKey(currentID)) {
+                    val last = activity.findViewById<TextView>(currentID)
+                    val pair = resMap[currentID]!!
+                    val viewOriginal = pair.first
+                    val drawableOriginal = ContextCompat.getDrawable(activity, viewOriginal)
+                    last.setCompoundDrawablesWithIntrinsicBounds(
+                        null,
+                        drawableOriginal,
+                        null,
+                        null
+                    )
                 }
-
-                this.currentID = key;
-                TextView here = this.activity.findViewById(key);
-                Pair<Integer, Integer> pair = this.res_map.get(key);
-                assert pair != null;
-                Integer view_clicked = pair.second;
-                Drawable drawable_clicked = ContextCompat.getDrawable(this.activity, view_clicked);
-                here.setCompoundDrawablesWithIntrinsicBounds(null, drawable_clicked, null, null);
-
+                currentID = key
+                val here = activity.findViewById<TextView>(key)
+                val pair = resMap[key]!!
+                val viewClicked = pair.second
+                val drawableClicked = ContextCompat.getDrawable(activity, viewClicked)
+                here.setCompoundDrawablesWithIntrinsicBounds(null, drawableClicked, null, null)
                 supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, value)
-                        .commitNow();
-
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, value as Fragment)
+                    .commitNow()
                 if (key == R.id.navigation_home) {
-                    HomePageFragment _default_fragment = (HomePageFragment) Objects.requireNonNull(this.mapper.get(R.id.navigation_home));
-                    assert _default_fragment.getView() != null;
-                    _default_fragment.afterCreateHandler();
+                    val localDefaultFragment =
+                        mapper[R.id.navigation_home]!! as HomePageFragment
+                    localDefaultFragment.requireView()
+                    localDefaultFragment.afterCreateHandler()
                 }
-            });
-        });
+            }
+        }
     }
 
-    public void afterCreateHandle() {
-        HomePageFragment default_fragment = (HomePageFragment) Objects.requireNonNull(this.mapper.get(R.id.navigation_home));
-        assert default_fragment.getView() != null;
-        default_fragment.afterCreateHandler();
+    fun afterCreateHandle() {
+        val defaultFragment =
+            Objects.requireNonNull(mapper[R.id.navigation_home]) as HomePageFragment
+        assert(defaultFragment.view != null)
+        defaultFragment.afterCreateHandler()
     }
 
-    public void onCreateHandle() {
-        this.handleNavigation();
+    fun onCreateHandle() {
+        handleNavigation()
     }
 }
-
