@@ -38,7 +38,7 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:textSize="17sp"
-            android:textColor="#5F6799"
+            android:textColor="@color/home_tabs_selected"
             />
 
         <TextView
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/adventures"
-            android:textColor="#999999"
+            android:textColor="@color/home_tabs_original"
             android:layout_weight="1"
             android:textAlignment="center"
             android:textSize="17sp"
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/activities"
-            android:textColor="#999999"
+            android:textColor="@color/home_tabs_original"
             android:layout_weight="1"
             android:textAlignment="center"
             android:textSize="17sp"
