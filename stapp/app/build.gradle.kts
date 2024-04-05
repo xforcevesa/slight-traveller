@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.core:core-ktx")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

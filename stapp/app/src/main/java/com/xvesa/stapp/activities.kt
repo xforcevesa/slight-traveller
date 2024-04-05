@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * handler: action handler class initialized in the onCreate hook.
      */
-    private var handler: NavigationHandler? = null
+    private lateinit var handler: NavigationHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,15 +18,14 @@ class MainActivity : AppCompatActivity() {
         this.setContentView(R.layout.activity_main)
 
         // Setup normal handlers.
-        handler = NavigationHandler(this).let {
+        handler = NavigationHandler(this).also {
             it.onCreateHandle()
-            it
         }
     }
 
     override fun onEnterAnimationComplete() {
         super.onEnterAnimationComplete()
         // Setup after create handlers.
-        handler!!.afterCreateHandle()
+        handler.afterCreateHandle()
     }
 }
