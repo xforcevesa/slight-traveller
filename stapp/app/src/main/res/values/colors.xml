@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="home_tabs_selected">#5F6799</color>
-    <color name="home_tabs_original">#999999</color>
-    <color name="search_bar_color">#99AF77</color>
+    <color name="home_tabs_original">#888888</color>
+    <color name="search_bar_color">#4499AF77</color>
+    <color name="message_color">#FFFFFF</color>
 </resources>

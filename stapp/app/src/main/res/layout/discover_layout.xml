@@ -6,6 +6,7 @@
     android:id="@+id/discover_layout">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/search_view"
         android:layout_marginTop="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,16 +14,36 @@
         android:background="@drawable/search_edit_text_background"
         app:cardElevation="4dp">
 
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:iconifiedByDefault="false"
-            android:foreground="@drawable/search_edit_text_background"
-            android:queryHint="@string/search_hint"
-            />
+<!--        <SearchView-->
+<!--            android:id="@+id/search"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:iconifiedByDefault="false"-->
+<!--            android:foreground="@drawable/search_edit_text_background"-->
+<!--            android:queryHint="@string/search_hint"-->
+<!--            />-->
 
     </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_view"
+        android:layout_marginTop="30sp"
+        >
+
+        <TextView
+            android:layout_width="160sp"
+            android:layout_height="160sp"
+            android:text="@string/chat_with_qhu_gpt"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:background="@drawable/rounded_border"
+            android:layout_marginStart="20sp"
+            />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

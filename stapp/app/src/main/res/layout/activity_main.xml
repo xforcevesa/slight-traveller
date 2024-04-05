@@ -38,11 +38,11 @@
             />
 
         <TextView
-            android:id="@+id/navigation_discover"
+            android:id="@+id/navigation_chat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/nav_menu_second"
-            app:drawableTopCompat="@drawable/search_original"
+            app:drawableTopCompat="@drawable/chat_original"
             android:layout_weight="1"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"

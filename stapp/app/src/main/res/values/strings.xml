@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SlightTravellerApp</string>
     <string name="nav_menu_first">Home</string>
-    <string name="nav_menu_second">Discover</string>
+    <string name="nav_menu_second">QHU-GPT</string>
     <string name="nav_menu_third">Dashboard</string>
     <string name="find_more">Explore More</string>
     <string name="avatar">Avatar</string>
@@ -15,4 +15,8 @@
     <string name="arrow">Arrow</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
+    <string name="chat_with_qhu_gpt">Chat With QHU-GPT</string>
+    <string name="type_a_message">Type a message</string>
+    <string name="send">Send</string>
+    <string name="message_demo">Hello, this is a message.</string>
 </resources>
