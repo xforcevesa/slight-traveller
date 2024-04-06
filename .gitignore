@@ -33,3 +33,5 @@ google-services.json
 *.hprof
 
 env
+
+__pycache__
