@@ -282,8 +282,10 @@ class ExperiencesTabPageFragment(id: Int) : AbstractPageFragment(id) {
 
             // Carousel images
             listOf(
-                R.drawable.avatar to "My Avatar A",
-                R.drawable.avatar to "My Avatar B"
+                R.drawable.great_wall to "The Great Wall",
+                R.drawable.lake to "The Salt Lake",
+                R.drawable.mountains to "The Sharp Mountains",
+                R.drawable.waterfall to "The Magnificent Water"
             ).let {
                 v.adapter = CarouselAdapter(it)
             }

@@ -33,5 +33,6 @@ google-services.json
 *.hprof
 
 env
+chatglm3-6b
 
 __pycache__
