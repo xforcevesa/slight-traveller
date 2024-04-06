@@ -1,0 +1,1 @@
+streamlit run web_demo.py --server.fileWatcherType none --server.address 127.0.0.1
