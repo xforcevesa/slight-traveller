@@ -37,7 +37,7 @@ class MessageAdapter(private val messages: List<String>) :
     }
 }
 
-class CarouselAdapter(private val images: List<Int>) :
+class CarouselAdapter(private val images: List<Pair<Int, String>>) :
     RecyclerView.Adapter<CarouselAdapter.CarouselViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarouselViewHolder {
@@ -46,7 +46,8 @@ class CarouselAdapter(private val images: List<Int>) :
     }
 
     override fun onBindViewHolder(holder: CarouselViewHolder, position: Int) {
-        holder.imageView.setImageResource(images[position])
+        holder.imageView.setImageResource(images[position].first)
+        holder.textView.text = images[position].second
     }
 
     override fun getItemCount(): Int {
@@ -55,5 +56,6 @@ class CarouselAdapter(private val images: List<Int>) :
 
     class CarouselViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.image_view)
+        val textView: TextView = itemView.findViewById(R.id.text_view)
     }
 }

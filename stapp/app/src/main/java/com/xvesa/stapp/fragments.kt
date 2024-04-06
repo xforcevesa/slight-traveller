@@ -91,6 +91,7 @@ class HomePageFragment(id: Int) : AbstractPageFragment(id) {
 
         mapper.forEach { (id: Int, _) ->
             val homeTab = frame.findViewById<TextView>(id)
+            if (homeTab.hasOnClickListeners()) return@forEach
             homeTab.setOnClickListener {
                 // If they equal, there's no need to change the icons.
                 if (id == lastViewID) return@setOnClickListener
@@ -132,6 +133,7 @@ class HomePageFragment(id: Int) : AbstractPageFragment(id) {
                     }
                 }
 
+                // Auto load
                 when (id) {
                     R.id.home_tabs_menu_first ->
                         (mapper[id] as ExperiencesTabPageFragment).also {
@@ -151,7 +153,7 @@ class HomePageFragment(id: Int) : AbstractPageFragment(id) {
 class ChatPageFragment(id: Int) : AbstractPageFragment(id) {
     // Recycler View to enable rollback scroll operation.
     private lateinit var recyclerViewChat: RecyclerView
-    // Input box
+    // Input text box
     private lateinit var editTextMessage: EditText
     // Send button
     private lateinit var buttonSend: Button
@@ -174,17 +176,24 @@ class ChatPageFragment(id: Int) : AbstractPageFragment(id) {
         recyclerViewChat.adapter = messageAdapter
         recyclerViewChat.layoutManager = LinearLayoutManager(this.context)
 
+        if (buttonSend.hasOnClickListeners()) return
+
+        // Callback
         buttonSend.setOnClickListener {
-            editTextMessage.text.toString().let {
+            // Process the text box
+            editTextMessage.text.toString().trim{ it <= ' ' }.let {
                 if (it.isNotEmpty()) {
-                    sendMessage(it)
-                    sendMessage("You sent: $it")
+                    viewMessage(it)
+                    viewMessage("You sent: $it")
                 }
             }
         }
     }
 
-    private fun sendMessage(message: String) {
+    /**
+     * View the messages
+     */
+    private fun viewMessage(message: String) {
         messages.add(message)
         messageAdapter.notifyItemInserted(messages.size - 1)
         recyclerViewChat.scrollToPosition(messages.size - 1)
@@ -198,13 +207,22 @@ class ChatPageFragment(id: Int) : AbstractPageFragment(id) {
 class ExperiencesTabPageFragment(id: Int) : AbstractPageFragment(id) {
 
     override fun afterCreateHandler() {
+
         // Obtain the frame
         val frame = (this.view as LinearLayout?)!!
 
-        val images = listOf(R.drawable.avatar, R.drawable.avatar)
+        frame.findViewById<ViewPager2>(R.id.view_pager).let {v ->
 
-        frame.findViewById<ViewPager2>(R.id.view_pager)
-            .adapter = CarouselAdapter(images)
+            if (v.adapter is CarouselAdapter) return@let
+
+            // Carousel images
+            listOf(
+                R.drawable.avatar to "My Avatar A",
+                R.drawable.avatar to "My Avatar B"
+            ).let {
+                v.adapter = CarouselAdapter(it)
+            }
+        }
     }
 
 }
