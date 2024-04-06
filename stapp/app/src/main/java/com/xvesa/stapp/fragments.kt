@@ -2,6 +2,7 @@ package com.xvesa.stapp
 
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import kotlinx.coroutines.InternalCoroutinesApi
+import org.apache.commons.text.StringEscapeUtils
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.concurrent.locks.ReentrantLock
+
 
 /**
  * Base class for DIY Fragments
@@ -184,10 +193,66 @@ class ChatPageFragment(id: Int) : AbstractPageFragment(id) {
             editTextMessage.text.toString().trim{ it <= ' ' }.let {
                 if (it.isNotEmpty()) {
                     viewMessage(it)
-                    viewMessage("You sent: $it")
+                    viewMessage(chatRequest(it))
                 }
             }
         }
+    }
+
+    @OptIn(InternalCoroutinesApi::class)
+    private fun chatRequest(message: String): String {
+        var finished = false
+        val finishedLock = ReentrantLock(true)
+
+        var text = ""
+
+        val thread = Thread {
+            val restUrl = URL("http://42.180.52.71:8999/chat")
+
+            val param = "{\"username\": \"nomodeset\", \"password\": \"123456789\", \"prompt\": \"$message\"}"
+//            val param = "username=nomodeset&password=123456789&prompt=$message"
+
+            val conn = restUrl.openConnection() as HttpURLConnection
+            conn.requestMethod = "POST"
+            conn.setRequestProperty("Connection", "keep-Alive")
+            conn.setRequestProperty("Content-Type","application/json")
+            conn.setDoOutput(true)
+            conn.setDoInput(true)
+
+            val out = conn.outputStream
+            out.write(param.toByteArray())
+            out.flush()
+            conn.connect()
+
+            val responseCode: Int = conn.getResponseCode()
+            Log.d("ResponseCode", responseCode.toString())
+
+            if (responseCode == 200) {
+                BufferedReader(InputStreamReader(conn.inputStream, "utf-8")).use { br ->
+                    text = br.readText()
+                }
+            } else {
+                text = "Connection Failed: HTTP Status Code $responseCode"
+            }
+
+            conn.disconnect()
+            finishedLock.lock()
+            finished = true
+            finishedLock.unlock()
+        }
+        thread.start()
+        thread.join()
+        while (true) {
+            var isBreak = false
+            finishedLock.lock()
+            if (finished) isBreak = true
+            finishedLock.unlock()
+            if (isBreak) {
+                break
+            }
+        }
+        text = StringEscapeUtils.unescapeJava(text)
+        return text
     }
 
     /**
