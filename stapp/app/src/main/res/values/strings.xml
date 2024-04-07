@@ -20,4 +20,8 @@
     <string name="send">Send</string>
     <string name="message_demo">Hello, this is a message.</string>
     <string name="null_name">Null</string>
+    <string name="great_wall">The Great Wall</string>
+    <string name="salt_lake">The Salt Lake</string>
+    <string name="sharp_mountains">The Sharp Mountains</string>
+    <string name="magnificent_waterfall">The Magnificent Waterfall</string>
 </resources>

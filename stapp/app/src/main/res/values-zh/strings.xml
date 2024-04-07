@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">轻智旅</string>
+    <string name="nav_menu_first">主页</string>
+    <string name="nav_menu_second">AI助手</string>
+    <string name="nav_menu_third">我的</string>
+    <string name="find_more">观沧海</string>
+    <string name="avatar">头像</string>
+    <string name="experiences">奇景</string>
+    <string name="adventures">冒险</string>
+    <string name="activities">活动</string>
+    <string name="search_hint">搜索更多</string>
+    <string name="user_avatar">用户头像</string>
+    <string name="user_name">nomodeset</string>
+    <string name="user_id">UID: 3390270462</string>
+    <string name="arrow">箭头</string>
+    <string name="settings">设置</string>
+    <string name="about">关于</string>
+    <string name="chat_with_qhu_gpt">与QHU-GPT交谈</string>
+    <string name="type_a_message">在此给AI发消息</string>
+    <string name="send">发送</string>
+    <string name="message_demo">这是样例消息</string>
+    <string name="null_name">空对象</string>
+    <string name="great_wall">宏伟长城</string>
+    <string name="salt_lake">波光盐湖</string>
+    <string name="sharp_mountains">巍峨险峰</string>
+    <string name="magnificent_waterfall">壮阔瀑水</string>
+</resources>

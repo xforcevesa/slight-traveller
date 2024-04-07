@@ -282,10 +282,10 @@ class ExperiencesTabPageFragment(id: Int) : AbstractPageFragment(id) {
 
             // Carousel images
             listOf(
-                R.drawable.great_wall to "The Great Wall",
-                R.drawable.lake to "The Salt Lake",
-                R.drawable.mountains to "The Sharp Mountains",
-                R.drawable.waterfall to "The Magnificent Water"
+                R.drawable.great_wall to frame.resources.getString(R.string.great_wall),
+                R.drawable.lake to frame.resources.getString(R.string.salt_lake),
+                R.drawable.mountains to frame.resources.getString(R.string.sharp_mountains),
+                R.drawable.waterfall to frame.resources.getString(R.string.magnificent_waterfall)
             ).let {
                 v.adapter = CarouselAdapter(it)
             }
